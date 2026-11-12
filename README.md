@@ -2,6 +2,10 @@
 
 A small personal web app that turns a recipe and a target bake time into exact quantities and a timed schedule. Plain HTML, CSS and vanilla JavaScript: no frameworks, no build step, hosted on GitHub Pages.
 
+## Live demo
+
+<https://YOUR-USERNAME.github.io/YOUR-REPO/> (placeholder: replace with the real GitHub Pages URL)
+
 ## Product spec
 
 **Goal**

@@ -96,22 +96,60 @@ function renderRecipe() {
   resultsEl.hidden = false;
 }
 
-form.addEventListener('input', renderRecipe);
+const RECIPE_KEY = 'planner.recipe';
+const SCHEDULE_KEY = 'planner.schedule';
+
+function loadJson(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch {
+    return null;
+  }
+}
+
+function recipeFields() {
+  return {
+    flours: [...floursEl.querySelectorAll('.flour-row')].map((row) => ({
+      name: row.querySelector('.flour-name').value,
+      grams: row.querySelector('.flour-grams').value,
+    })),
+    water: form.elements.water.value,
+    starter: form.elements.starter.value,
+    salt: form.elements.salt.value,
+  };
+}
+
+function fillRecipe(fields) {
+  floursEl.replaceChildren();
+  fields.flours.forEach((f) => addFlourRow(f.name, f.grams));
+  form.elements.water.value = fields.water;
+  form.elements.starter.value = fields.starter;
+  form.elements.salt.value = fields.salt;
+}
+
+function saveRecipe() {
+  localStorage.setItem(RECIPE_KEY, JSON.stringify(recipeFields()));
+}
+
+form.addEventListener('input', () => {
+  renderRecipe();
+  saveRecipe();
+});
 form.addEventListener('submit', (e) => e.preventDefault());
 document.getElementById('add-flour').addEventListener('click', () => {
   addFlourRow();
   renderRecipe();
+  saveRecipe();
 });
 floursEl.addEventListener('click', (e) => {
   if (!e.target.classList.contains('remove')) return;
   e.target.closest('.flour-row').remove();
   renderRecipe();
+  saveRecipe();
 });
 
-DEFAULT_RECIPE.flours.forEach((f) => addFlourRow(f.name, f.grams));
-form.elements.water.value = DEFAULT_RECIPE.water;
-form.elements.starter.value = DEFAULT_RECIPE.starter;
-form.elements.salt.value = DEFAULT_RECIPE.salt;
+const savedRecipe = loadJson(RECIPE_KEY);
+fillRecipe(savedRecipe?.flours ? savedRecipe : DEFAULT_RECIPE);
 renderRecipe();
 
 // Schedule planner
@@ -219,7 +257,32 @@ function renderSchedule() {
   scheduleResultsEl.hidden = false;
 }
 
-scheduleForm.addEventListener('input', renderSchedule);
+function scheduleFields() {
+  return {
+    outOfOven: scheduleForm.elements.outOfOven.value,
+    roomTemp: scheduleForm.elements.roomTemp.value,
+    coldRetard: scheduleForm.elements.coldRetard.checked,
+  };
+}
+
+function fillSchedule(fields) {
+  scheduleForm.elements.outOfOven.value = fields.outOfOven;
+  scheduleForm.elements.roomTemp.value = fields.roomTemp;
+  scheduleForm.elements.coldRetard.checked = fields.coldRetard;
+}
+
+function defaultScheduleFields() {
+  return {
+    outOfOven: toInputValue(defaultOutOfOven(new Date(), DEFAULT_SCHEDULE.outOfOvenHour)),
+    roomTemp: DEFAULT_SCHEDULE.tempC,
+    coldRetard: DEFAULT_SCHEDULE.coldRetard,
+  };
+}
+
+scheduleForm.addEventListener('input', () => {
+  renderSchedule();
+  localStorage.setItem(SCHEDULE_KEY, JSON.stringify(scheduleFields()));
+});
 scheduleForm.addEventListener('submit', (e) => e.preventDefault());
 
 copyButton.addEventListener('click', async () => {
@@ -228,10 +291,19 @@ copyButton.addEventListener('click', async () => {
   setTimeout(() => (copyButton.textContent = 'Copy schedule'), 1500);
 });
 
-scheduleForm.elements.outOfOven.value = toInputValue(defaultOutOfOven(new Date(), DEFAULT_SCHEDULE.outOfOvenHour));
-scheduleForm.elements.roomTemp.value = DEFAULT_SCHEDULE.tempC;
-scheduleForm.elements.coldRetard.checked = DEFAULT_SCHEDULE.coldRetard;
+const savedSchedule = loadJson(SCHEDULE_KEY);
+fillSchedule(savedSchedule ?? defaultScheduleFields());
 renderSchedule();
+
+document.getElementById('reset-defaults').addEventListener('click', (e) => {
+  e.preventDefault();
+  localStorage.removeItem(RECIPE_KEY);
+  localStorage.removeItem(SCHEDULE_KEY);
+  fillRecipe(DEFAULT_RECIPE);
+  renderRecipe();
+  fillSchedule(defaultScheduleFields());
+  renderSchedule();
+});
 
 // Theme: follows the system until the user picks one, then remembers the choice.
 const themeToggle = document.getElementById('theme-toggle');

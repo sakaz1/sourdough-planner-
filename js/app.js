@@ -122,6 +122,8 @@ const scheduleResultsEl = document.getElementById('schedule-results');
 const bulkSummaryEl = document.getElementById('bulk-summary');
 const bulkNoteEl = document.getElementById('bulk-note');
 const timelineEl = document.getElementById('timeline');
+const copyButton = document.getElementById('copy-schedule');
+let scheduleText = '';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -213,11 +215,18 @@ function renderSchedule() {
   if (night) scheduleWarningsEl.append(listItem(`${plural(night)} fall between 23:00 and 06:00.`));
 
   timelineEl.append(...steps.map((s) => stepElement(s, now)));
+  scheduleText = steps.map((s) => `${formatTime(s.time)} ${dayLabel(s.time, now)} ${s.label}`).join('\n');
   scheduleResultsEl.hidden = false;
 }
 
 scheduleForm.addEventListener('input', renderSchedule);
 scheduleForm.addEventListener('submit', (e) => e.preventDefault());
+
+copyButton.addEventListener('click', async () => {
+  await navigator.clipboard.writeText(scheduleText);
+  copyButton.textContent = 'Copied';
+  setTimeout(() => (copyButton.textContent = 'Copy schedule'), 1500);
+});
 
 scheduleForm.elements.outOfOven.value = toInputValue(defaultOutOfOven(new Date(), DEFAULT_SCHEDULE.outOfOvenHour));
 scheduleForm.elements.roomTemp.value = DEFAULT_SCHEDULE.tempC;

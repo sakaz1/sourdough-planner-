@@ -3,7 +3,7 @@
 ## 1. Set up the static page skeleton and GitHub Pages
 
 **Description**
-Create `index.html`, `css/style.css`, `js/app.js` and `js/defaults.js`, and enable GitHub Pages.
+Create `index.html`, `styles.css`, `js/app.js` and `js/defaults.js`, and enable GitHub Pages.
 
 **Acceptance criteria**
 - The page loads from the Pages URL with no console errors.
@@ -13,7 +13,7 @@ Create `index.html`, `css/style.css`, `js/app.js` and `js/defaults.js`, and enab
 ## 2. Recipe calculator: baker's %, hydration, total weight
 
 **Description**
-Implement pure functions in `recipe.js` and a form for multiple flours, water, starter and salt.
+Implement pure functions in `calc.js` and a form for multiple flours, water, starter and salt.
 
 **Acceptance criteria**
 - Flour rows can be added and removed.
@@ -35,10 +35,10 @@ Add a target weight input that scales all ingredients proportionally.
 ## 4. Temperature-adjusted bulk time
 
 **Description**
-Implement `bulkTime()` in `fermentation.js` using 5 h × 2^((24 − T)/8).
+Implement `bulkTime()` in `fermentation.js` using 3 h × 2^((24 − T)/8).
 
 **Acceptance criteria**
-- 24 °C gives 5:00, 20 °C gives 7:05, and 28 °C gives 3:30 after rounding to 5 minutes.
+- 24 °C gives 3:00, 20 °C gives 4:15, and 28 °C gives 2:05 after rounding to 5 minutes.
 - Input is clamped to 16–32 °C, with a visible warning outside that range.
 - The UI shows the one-sentence explanation of the model.
 - The function is covered in `tests/tests.html`.

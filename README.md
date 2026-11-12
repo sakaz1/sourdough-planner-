@@ -40,7 +40,7 @@ One home baker (me), on phone or laptop, usually the day before baking. I know s
 | Starter (100%) | 100 g |
 | Salt | 10 g |
 | Starter feed before mix | 5 h |
-| Bulk at reference temp | 5 h at 24 °C |
+| Bulk at reference temp | 3 h at 24 °C |
 | Cold retard | 12 h, bake straight from the fridge |
 | Preheat | 45 min |
 | Bake | 20 min at 250 °C with steam, then 22 min at 210 °C without |
@@ -58,21 +58,21 @@ One home baker (me), on phone or laptop, usually the day before baking. I know s
 
 ## Temperature model
 
-> **Bulk time halves for every 8 °C warmer (and doubles for every 8 °C cooler), starting from 5 hours at 24 °C.**
+> **Bulk time halves for every 8 °C warmer (and doubles for every 8 °C cooler), starting from 3 hours at 24 °C.**
 
 $$
-t_{\text{bulk}} = 5\,\text{h} \times 2^{\frac{24 - T}{8}}
+t_{\text{bulk}} = 3\,\text{h} \times 2^{\frac{24 - T}{8}}
 $$
 
-- T is room temperature in °C. The 5 h and 24 °C values are editable defaults.
+- T is room temperature in °C. The 3 h and 24 °C values are editable defaults.
 - T is clamped to 16–32 °C, with a warning outside that range.
 - The result is rounded to the nearest 5 minutes.
 
 | Room temp | Bulk |
 |---|---|
-| 20 °C | 5 × 2^0.5 ≈ **7 h 05 min** |
-| 24 °C | **5 h 00 min** |
-| 28 °C | 5 × 2^−0.5 ≈ **3 h 30 min** |
+| 20 °C | 3 × 2^0.5 ≈ **4 h 15 min** |
+| 24 °C | **3 h 00 min** |
+| 28 °C | 3 × 2^−0.5 ≈ **2 h 05 min** |
 
 **Backward calculation** from the out-of-oven time:
 - Bake starts 42 min earlier (20 min steam + 22 min without).
@@ -87,10 +87,10 @@ Without the cold retard, shaping goes straight into a 1 h room-temperature proof
 
 | Step | Time |
 |---|---|
-| Feed starter | Fri 11:18 |
-| Mix | Fri 16:18 |
-| Add salt | Fri 16:48 |
-| Stretch and folds | Fri 17:18, 17:48, 18:18, 18:48 |
+| Feed starter | Fri 13:18 |
+| Mix | Fri 18:18 |
+| Add salt | Fri 18:48 |
+| Stretch and folds | Fri 19:18, 19:48, 20:18, 20:48 |
 | End bulk, shape, into fridge | Fri 21:18 |
 | Preheat oven | Sat 08:33 |
 | Out of fridge, bake with steam at 250 °C | Sat 09:18 |
@@ -102,17 +102,16 @@ Without the cold retard, shaping goes straight into a 1 h room-temperature proof
 
 ```
 /
-├── index.html          # markup: recipe form, schedule form, results
-├── css/
-│   └── style.css       # mobile-first styling
+├── index.html          # markup: recipe form, results (schedule form to come)
+├── styles.css          # mobile-first styling
 ├── js/
-│   ├── app.js          # wires DOM events, rendering, localStorage
-│   ├── recipe.js       # baker's %, hydration, totals, scaling (pure functions)
-│   ├── fermentation.js # bulkTime(tempC, refHours, refTemp)
-│   ├── schedule.js     # buildSchedule(outOfOvenDate, options) -> steps[]
+│   ├── app.js          # wires DOM events, rendering (localStorage to come)
+│   ├── calc.js         # baker's %, hydration, totals (scaling to come); pure functions
+│   ├── fermentation.js # planned: bulkTime(tempC, refHours, refTemp)
+│   ├── schedule.js     # planned: buildSchedule(outOfOvenDate, options) -> steps[]
 │   └── defaults.js     # default recipe and timings
 ├── tests/
-│   └── tests.html      # open in browser; runs plain assertions on pure modules
+│   └── tests.html      # planned: open in browser; runs plain assertions on pure modules
 ├── docs/
 │   └── issues.md       # work items to turn into GitHub issues
 └── README.md

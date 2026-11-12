@@ -1,0 +1,110 @@
+:root {
+  --bg: #faf6f0;
+  --fg: #2b2118;
+  --muted: #6f6254;
+  --accent: #8a5a2b;
+  --border: #d9cdbd;
+  --error: #b3261e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+h1 { font-size: 1.5rem; margin: 0.5rem 0 1rem; }
+h2 { font-size: 1.15rem; margin: 0 0 0.75rem; }
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+}
+
+legend { padding: 0 0.25rem; color: var(--muted); }
+
+input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  font: inherit; /* 16px avoids iOS zoom on focus */
+}
+
+input:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.flour-row {
+  display: grid;
+  grid-template-columns: 1fr 6rem 2.75rem;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.field { margin-bottom: 0.75rem; }
+.field label { display: block; margin-bottom: 0.25rem; }
+
+button {
+  min-height: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.remove { font-size: 1.25rem; line-height: 1; }
+.secondary { padding: 0 0.875rem; }
+
+.errors {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  color: var(--error);
+}
+
+.errors:empty { display: none; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--border);
+}
+
+caption {
+  caption-side: bottom;
+  padding-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+th, td {
+  padding: 0.5rem 0.625rem;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+}
+
+th:first-child, thead th { text-align: left; }
+thead th { background: #f0e8dc; font-weight: 600; }
+tbody th { font-weight: 400; }
+tr.summary th, tr.summary td { font-weight: 600; }
+tr.divider th, tr.divider td { border-top: 2px solid var(--border); }

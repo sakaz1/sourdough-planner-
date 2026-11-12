@@ -72,13 +72,10 @@ export function buildSchedule(outOfOven, options = {}, now = new Date()) {
     step('salt', 'Add salt', '', salt),
     ...folds.map((offset, i) => step(`fold-${i + 1}`, `Stretch and fold ${i + 1} of ${folds.length}`, '', offset)),
     step('bulk-end', 'End of bulk', `Bulk took ${formatDuration(bulk.minutes)}`, shape),
-    step(
-      'shape',
-      'Shape',
-      o.coldRetard ? '' : `Then proof ${o.proofHours} h at room temperature`,
-      shape,
-    ),
-    ...(o.coldRetard ? [step('fridge', 'Into the fridge', `Cold retard for ${o.retardHours} h`, shape)] : []),
+    step('shape', 'Shape', '', shape),
+    ...(o.coldRetard
+      ? [step('fridge', 'Into the fridge', `Cold retard for ${o.retardHours} h`, shape)]
+      : [step('proof', 'Proof', `${o.proofHours} h at room temperature`, shape)]),
     step('preheat', 'Preheat oven', `To ${o.steamTempC} \u00b0C`, preheat),
     step(
       'bake',

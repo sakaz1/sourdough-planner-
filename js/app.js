@@ -223,3 +223,30 @@ scheduleForm.elements.outOfOven.value = toInputValue(defaultOutOfOven(new Date()
 scheduleForm.elements.roomTemp.value = DEFAULT_SCHEDULE.tempC;
 scheduleForm.elements.coldRetard.checked = DEFAULT_SCHEDULE.coldRetard;
 renderSchedule();
+
+// Theme: follows the system until the user picks one, then remembers the choice.
+const themeToggle = document.getElementById('theme-toggle');
+const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+const THEME_KEY = 'theme';
+
+function savedTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  return saved === 'light' || saved === 'dark' ? saved : null;
+}
+
+function currentTheme() {
+  return savedTheme() ?? (systemDark.matches ? 'dark' : 'light');
+}
+
+function applyTheme() {
+  const theme = currentTheme();
+  document.documentElement.dataset.theme = theme;
+  themeToggle.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+}
+
+themeToggle.addEventListener('click', () => {
+  localStorage.setItem(THEME_KEY, currentTheme() === 'dark' ? 'light' : 'dark');
+  applyTheme();
+});
+systemDark.addEventListener('change', applyTheme);
+applyTheme();

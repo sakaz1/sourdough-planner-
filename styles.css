@@ -108,3 +108,60 @@ thead th { background: #f0e8dc; font-weight: 600; }
 tbody th { font-weight: 400; }
 tr.summary th, tr.summary td { font-weight: 600; }
 tr.divider th, tr.divider td { border-top: 2px solid var(--border); }
+
+section + section { margin-top: 2rem; }
+
+.field.checkbox { display: flex; align-items: center; gap: 0.625rem; }
+.field.checkbox input { width: 1.5rem; min-height: 1.5rem; height: 1.5rem; flex: none; }
+.field.checkbox label { margin: 0; }
+
+.bulk-summary { margin: 0; font-weight: 600; }
+.note { margin: 0.25rem 0 0.75rem; color: var(--muted); font-size: 0.875rem; }
+
+.warnings {
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.75rem 0.5rem 1.75rem;
+  border: 1px solid #e3b341;
+  border-radius: 6px;
+  background: #fff7e0;
+}
+
+.warnings:empty { display: none; }
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0 0 1rem 1.25rem;
+  border-left: 2px solid var(--border);
+  margin-left: 0.25rem;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  left: -0.4rem;
+  top: 0.35rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.step:last-child { border-left-color: transparent; padding-bottom: 0; }
+.step.warn::before { background: #c77700; }
+
+.when { display: flex; flex-direction: column; }
+.time { font-variant-numeric: tabular-nums; font-weight: 600; }
+.day { color: var(--muted); font-size: 0.875rem; }
+
+.what { display: flex; flex-direction: column; }
+.detail { color: var(--muted); font-size: 0.875rem; }
+.flag { color: #8a4b00; font-size: 0.875rem; font-weight: 600; }

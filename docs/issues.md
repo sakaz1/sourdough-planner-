@@ -35,7 +35,7 @@ Add a target weight input that scales all ingredients proportionally.
 ## 4. Temperature-adjusted bulk time
 
 **Description**
-Implement `bulkTime()` in `fermentation.js` using 3 h × 2^((24 − T)/8).
+Implement `bulkTime()` in `schedule.js` using 3 h × 2^((24 − T)/8).
 
 **Acceptance criteria**
 - 24 °C gives 3:00, 20 °C gives 4:15, and 28 °C gives 2:05 after rounding to 5 minutes.
